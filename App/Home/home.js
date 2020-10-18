@@ -9,8 +9,8 @@ import {
   FlatList,
   TouchableOpacity,
 } from 'react-native';
-import {Colors} from 'react-native/Libraries/NewAppScreen';
-const DATA = [
+
+const DATA_RECOMMEND = [
   {
     id: 1,
     img: require('../Images/cfdemo.png'),
@@ -33,9 +33,42 @@ const DATA = [
     star: 5,
   },
 ];
-const Home: () => React$Node = () => {
-  const renderItem = ({item, index}) => (
-    <View onPress={() => navigation.navigate('Details')} style={styles.item}>
+const DATA_VOUCHER = [
+  {
+    id: 1,
+    img: require('../Images/cfdemo.png'),
+    title: 'Ưu đãi dành riêng 8/3',
+    content: '8/3 này cùng 99Coffee cảm ơn người phụ nữ tôi yêu',
+  },
+  {
+    id: 1,
+    img: require('../Images/cfdemo.png'),
+    title: 'Ưu đãi dành riêng 8/3',
+    content: '8/3 này cùng 99Coffee cảm ơn người phụ nữ tôi yêu',
+  },
+  {
+    id: 1,
+    img: require('../Images/cfdemo.png'),
+    title: 'Ưu đãi dành riêng 8/3',
+    content: '8/3 này cùng 99Coffee cảm ơn người phụ nữ tôi yêu',
+  },
+  {
+    id: 1,
+    img: require('../Images/cfdemo.png'),
+    title: 'Ưu đãi dành riêng 8/3',
+    content: '8/3 này cùng 99Coffee cảm ơn người phụ nữ tôi yêu',
+  },
+  {
+    id: 1,
+    img: require('../Images/cfdemo.png'),
+    title: 'Ưu đãi dành riêng 8/3',
+    content: '8/3 này cùng 99Coffee cảm ơn người phụ nữ tôi yêu',
+  },
+];
+
+function Home({navigation}) {
+  const renderItemRecommend = ({item, index}) => (
+    <View style={styles.itemRecommend}>
       <View style={{height: 190, width: 180}}>
         <Image style={{height: 190, width: 180}} source={item.img} />
       </View>
@@ -54,24 +87,44 @@ const Home: () => React$Node = () => {
       </View>
     </View>
   );
+  const renderItemVoucher = ({item, index}) => (
+    <View style={styles.itemVoucher}>
+      <Image style={{flex: 1, height: 100}} source={item.img} />
+      <Text>{item.title}</Text>
+      <Text>{item.content}</Text>
+      <View>
+        <Text>Xem thêm</Text>
+      </View>
+    </View>
+  );
   return (
     <SafeAreaView>
       <ScrollView style={{backgroundColor: 'white'}}>
-        <View style={styles.viewTop}>
+        <View style={styles.horizontal}>
           <Image
             source={require('../Images/logo_cf.png')}
             style={styles.image}
           />
-          <Text>avatar</Text>
+          <Image
+            source={require('../Images/profile_avatar.png')}
+            style={styles.image}
+          />
+        </View>
+        <View style={[styles.horizontal, {marginTop: 8}]}>
+          <Text style={styles.title}>Đề xuất</Text>
+          <TouchableOpacity>
+            <Text style={styles.seeMore}>Xem thêm</Text>
+          </TouchableOpacity>
         </View>
         <View>
           <FlatList
             showsHorizontalScrollIndicator={false}
             horizontal={true}
-            data={DATA}
-            renderItem={renderItem}
+            data={DATA_RECOMMEND}
+            renderItem={renderItemRecommend}
           />
         </View>
+        <Text style={[styles.title, {margin: 8}]}>Thể loại</Text>
         <View
           style={{
             marginTop: 8,
@@ -79,18 +132,20 @@ const Home: () => React$Node = () => {
             flexDirection: 'row',
             justifyContent: 'space-between',
           }}>
-          <View style={styles.buttonMenu}>
+          <TouchableOpacity
+            style={styles.buttonMenu}
+            onPress={() => navigation.navigate('Details')}>
             <Image source={require('../Images/coffee-cup.png')} />
             <Text style={styles.textMenu}>Coffee</Text>
-          </View>
-          <View style={styles.buttonMenu}>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.buttonMenu}>
             <Image source={require('../Images/iceblend.png')} />
             <Text style={styles.textMenu}>Ice Blend</Text>
-          </View>
-          <View style={styles.buttonMenu}>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.buttonMenu}>
             <Image source={require('../Images/smoothie.png')} />
             <Text style={styles.textMenu}>Coffee</Text>
-          </View>
+          </TouchableOpacity>
         </View>
         <View
           style={{
@@ -99,23 +154,32 @@ const Home: () => React$Node = () => {
             flexDirection: 'row',
             justifyContent: 'space-between',
           }}>
-          <View style={styles.buttonMenu}>
-            <Image source={require('../Images/coffee-cup.png')} />
-            <Text style={styles.textMenu}>Coffee</Text>
-          </View>
-          <View style={styles.buttonMenu}>
-            <Image source={require('../Images/coffee-cup.png')} />
-            <Text style={styles.textMenu}>Coffee</Text>
-          </View>
-          <View style={styles.buttonMenu}>
-            <Image source={require('../Images/coffee-cup.png')} />
-            <Text style={styles.textMenu}>Coffee</Text>
-          </View>
+          <TouchableOpacity style={styles.buttonMenu}>
+            <Image source={require('../Images/cocktail.png')} />
+            <Text style={styles.textMenu}>Special</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.buttonMenu}>
+            <Image source={require('../Images/cupcake.png')} />
+            <Text style={styles.textMenu}>Food</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.buttonMenu}>
+            <Image source={require('../Images/menu.png')} />
+            <Text style={styles.textMenu}>More</Text>
+          </TouchableOpacity>
+        </View>
+        <Text style={[styles.title, {margin: 8}]}>Ưu đãi</Text>
+        <View>
+          <FlatList
+            showsHorizontalScrollIndicator={false}
+            horizontal={true}
+            data={DATA_VOUCHER}
+            renderItem={renderItemVoucher}
+          />
         </View>
       </ScrollView>
     </SafeAreaView>
   );
-};
+}
 
 const styles = StyleSheet.create({
   textMenu: {
@@ -150,7 +214,7 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     color: '#7E8EAA',
   },
-  item: {
+  itemRecommend: {
     width: 180,
     height: 240,
     marginTop: 8,
@@ -167,14 +231,37 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
   },
+  itemVoucher: {
+    width: 200,
+    height: 190,
+    marginTop: 8,
+    marginStart: 4,
+    marginEnd: 4,
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+  },
   image: {
     resizeMode: 'stretch',
   },
-  viewTop: {
+  title: {
+    fontSize: 20,
+    fontWeight: '500',
+    color: 'black',
+  },
+  horizontal: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingHorizontal: 12,
+  },
+  seeMore: {
+    fontSize: 10,
+    color: '#78A1FF',
+    textDecorationLine: 'underline',
   },
 });
 export default Home;

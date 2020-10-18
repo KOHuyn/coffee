@@ -7,40 +7,50 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import {createStackNavigator} from '@react-navigation/stack';
 import DetailItem from '../DetailItem/detailItem';
 const Tab = createBottomTabNavigator();
-const Stack = createStackNavigator();
-function Tabs() {
-  return (
-    <Tab.Navigator
-      screenOptions={({route}) => ({
-        tabBarIcon: ({focused, color, size}) => {
-          let iconName;
+const HomeStack = createStackNavigator();
+const LoginStack = createStackNavigator();
+import Login from '../Login/LoginScreen';
 
-          if (route.name === 'Trang chủ') {
-            iconName = focused
-              ? 'ios-information-circle'
-              : 'ios-information-circle-outline';
-          } else if (route.name === 'Mua hàng') {
-            iconName = focused ? 'ios-list-box' : 'ios-list';
-          } else {
-            iconName = focused ? 'ios-list-box' : 'ios-list';
-          }
-          // You can return any component that you like here!
-          return <Ionicons name={iconName} size={size} color={color} />;
-        },
-      })}>
-      <Tab.Screen name="Trang chủ" component={Home} />
-      <Tab.Screen name="Mua hàng" component={DetailItem} />
-      <Tab.Screen name="Hồ sơ" component={Home} />
-    </Tab.Navigator>
+function HomeStackScreen() {
+  return (
+    <HomeStack.Navigator>
+      <HomeStack.Screen name="Home" component={Home} />
+      <HomeStack.Screen name="Details" component={DetailItem} />
+    </HomeStack.Navigator>
   );
 }
+
+function LoginStackScreen() {
+  return (
+    <LoginStack.Navigator>
+      <LoginStack.Screen name="login" component={Login} />
+    </LoginStack.Navigator>
+  );
+}
+
 export default function AppNavigation() {
   return (
     <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen name="tabs" component={Tabs} />
-        <Stack.Screen name="Details" component={DetailItem} />
-      </Stack.Navigator>
+      <Tab.Navigator
+        screenOptions={({route}) => ({
+          tabBarIcon: ({focused, color, size}) => {
+            let iconName;
+
+            if (route.name === 'Home') {
+              iconName = focused ? 'home' : 'home-outline';
+            } else if (route.name === 'Cart') {
+              iconName = focused ? 'cart' : 'cart-outline';
+            } else {
+              iconName = focused ? 'person' : 'person-outline';
+            }
+            // You can return any component that you like here!
+            return <Ionicons name={iconName} size={size} color={color} />;
+          },
+        })}>
+        <Tab.Screen name="Home" component={HomeStackScreen} />
+        <Tab.Screen name="Cart" component={LoginStackScreen} />
+        <Tab.Screen name="Profile" component={Home} />
+      </Tab.Navigator>
     </NavigationContainer>
   );
 }
