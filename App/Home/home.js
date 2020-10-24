@@ -13,54 +13,124 @@ import {
 const DATA_RECOMMEND = [
   {
     id: 1,
-    img: require('../Images/cfdemo.png'),
+    img:
+      'https://images.immediate.co.uk/production/volatile/sites/30/2020/08/hub-image-coffee-e732616.jpg?quality=90&resize=504,458',
     title: 'First Item',
     price: '2.5$',
     star: 5,
   },
   {
     id: 2,
-    img: require('../Images/cfdemo.png'),
+    img:
+      'https://images.immediate.co.uk/production/volatile/sites/30/2020/08/hub-image-coffee-e732616.jpg?quality=90&resize=504,458',
     title: 'First Item',
     price: '2.5$',
     star: 5,
   },
   {
     id: 3,
-    img: require('../Images/cfdemo.png'),
+    img:
+      'https://images.immediate.co.uk/production/volatile/sites/30/2020/08/hub-image-coffee-e732616.jpg?quality=90&resize=504,458',
     title: 'First Item',
     price: '2.5$',
     star: 5,
   },
 ];
+const DATA_SALE = [
+  {
+    id: 1,
+    name: 'Phin sua da',
+    Id_type: 1,
+    price: 25,
+    promo_price: 22,
+    imgSrc:
+      'https://images.immediate.co.uk/production/volatile/sites/30/2020/08/hub-image-coffee-e732616.jpg?quality=90&resize=504,458',
+    decription: null,
+  },
+  {
+    id: 2,
+    name: 'Cà phê bạc hà',
+    Id_type: 1,
+    price: 25,
+    promo_price: 22,
+    imgSrc:
+      'https://images.immediate.co.uk/production/volatile/sites/30/2020/08/hub-image-coffee-e732616.jpg?quality=90&resize=504,458',
+    decription: null,
+  },
+  {
+    id: 1,
+    name: 'Phin sua da',
+    Id_type: 1,
+    price: 25,
+    promo_price: 22,
+    imgSrc:
+      'https://images.immediate.co.uk/production/volatile/sites/30/2020/08/hub-image-coffee-e732616.jpg?quality=90&resize=504,458',
+    decription: null,
+  },
+  {
+    id: 2,
+    name: 'Cà phê bạc hà',
+    Id_type: 1,
+    price: 25,
+    promo_price: 22,
+    imgSrc:
+      'https://images.immediate.co.uk/production/volatile/sites/30/2020/08/hub-image-coffee-e732616.jpg?quality=90&resize=504,458',
+    decription: null,
+  },
+  {
+    id: 1,
+    name: 'Phin sua da',
+    Id_type: 1,
+    price: 25,
+    promo_price: 22,
+    imgSrc:
+      'https://images.immediate.co.uk/production/volatile/sites/30/2020/08/hub-image-coffee-e732616.jpg?quality=90&resize=504,458',
+    decription: null,
+  },
+  {
+    id: 2,
+    name: 'Cà phê bạc hà',
+    Id_type: 1,
+    price: 25,
+    promo_price: 22,
+    imgSrc:
+      'https://images.immediate.co.uk/production/volatile/sites/30/2020/08/hub-image-coffee-e732616.jpg?quality=90&resize=504,458',
+    decription: null,
+  },
+];
 const DATA_VOUCHER = [
   {
     id: 1,
-    img: require('../Images/cfdemo.png'),
+    img:
+      'https://images.immediate.co.uk/production/volatile/sites/30/2020/08/hub-image-coffee-e732616.jpg?quality=90&resize=504,458',
     title: 'Ưu đãi dành riêng 8/3',
     content: '8/3 này cùng 99Coffee cảm ơn người phụ nữ tôi yêu',
   },
   {
     id: 1,
-    img: require('../Images/cfdemo.png'),
+    img:
+      'https://images.immediate.co.uk/production/volatile/sites/30/2020/08/hub-image-coffee-e732616.jpg?quality=90&resize=504,458',
     title: 'Ưu đãi dành riêng 8/3',
     content: '8/3 này cùng 99Coffee cảm ơn người phụ nữ tôi yêu',
   },
   {
     id: 1,
-    img: require('../Images/cfdemo.png'),
+    img:
+      'https://images.immediate.co.uk/production/volatile/sites/30/2020/08/hub-image-coffee-e732616.jpg?quality=90&resize=504,458',
     title: 'Ưu đãi dành riêng 8/3',
     content: '8/3 này cùng 99Coffee cảm ơn người phụ nữ tôi yêu',
   },
   {
     id: 1,
-    img: require('../Images/cfdemo.png'),
+    img:
+      'https://images.immediate.co.uk/production/volatile/sites/30/2020/08/hub-image-coffee-e732616.jpg?quality=90&resize=504,458',
     title: 'Ưu đãi dành riêng 8/3',
     content: '8/3 này cùng 99Coffee cảm ơn người phụ nữ tôi yêu',
   },
   {
     id: 1,
-    img: require('../Images/cfdemo.png'),
+    img:
+      'https://images.immediate.co.uk/production/volatile/sites/30/2020/08/hub-image-coffee-e732616.jpg?quality=90&resize=504,458',
     title: 'Ưu đãi dành riêng 8/3',
     content: '8/3 này cùng 99Coffee cảm ơn người phụ nữ tôi yêu',
   },
@@ -68,32 +138,73 @@ const DATA_VOUCHER = [
 
 function Home({navigation}) {
   const renderItemRecommend = ({item, index}) => (
-    <View style={styles.itemRecommend}>
-      <View style={{height: 190, width: 180}}>
-        <Image style={{height: 190, width: 180}} source={item.img} />
-      </View>
-      <View style={{flex: 1}}>
-        <Text style={styles.itemTitle}>{item.title}</Text>
+    <TouchableOpacity>
+      <View
+        style={[
+          styles.border8,
+          styles.marginItem,
+          {width: 150, height: 200, backgroundColor: '#DDECEC'},
+        ]}>
+        <Image
+          style={[{flex: 1, width: 150}, styles.image]}
+          source={{uri: item.img}}
+        />
         <View
-          style={{
-            padding: 8,
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-          }}>
-          <Text style={styles.itemPrice}>{item.price}</Text>
-          <Text style={styles.itemStar}>{item.star}</Text>
+          style={[styles.horizontalItem, styles.borderBottom8, {padding: 8}]}>
+          <Text style={styles.textBlack14}>{item.title}</Text>
+          <Text style={styles.textPink14}>{item.price}</Text>
         </View>
+      </View>
+    </TouchableOpacity>
+  );
+  const renderItemVoucher = ({item, index}) => (
+    <View
+      style={[
+        styles.border8,
+        styles.marginItem,
+        {backgroundColor: '#e9e9e9', width: 200, height: 220},
+      ]}>
+      <Image
+        style={[styles.image, {flex: 1, width: 200}]}
+        source={{uri: item.img}}
+      />
+      <View
+        style={{marginTop: 4, marginStart: 8, marginEnd: 8, marginBottom: 4}}>
+        <Text style={styles.textTitle}>{item.title}</Text>
+        <Text style={styles.textBlueLight12}>{item.content}</Text>
+        <TouchableOpacity>
+          <Text style={styles.borderTextRed}>Xem thêm</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
-  const renderItemVoucher = ({item, index}) => (
-    <View style={styles.itemVoucher}>
-      <Image style={{flex: 1, height: 100}} source={item.img} />
-      <Text>{item.title}</Text>
-      <Text>{item.content}</Text>
-      <View>
-        <Text>Xem thêm</Text>
+  const renderItemSale = ({item, index}) => (
+    <View
+      style={[
+        styles.border8,
+        styles.marginItem,
+        {backgroundColor: '#7E8EAA', height: 200, flex: 0.5},
+      ]}>
+      <Image style={[styles.image, {flex: 1}]} source={{uri: item.imgSrc}} />
+      <View style={[styles.borderBottom8]}>
+        <Text
+          style={[
+            styles.textBlack16,
+            {fontWeight: 'bold', textAlign: 'center', marginTop: 4},
+          ]}>
+          {item.name}
+        </Text>
+        <View
+          style={[
+            styles.horizontalItem,
+            {paddingStart: 8, paddingEnd: 8, paddingBottom: 8},
+          ]}>
+          <Text
+            style={[styles.textPink14, {textDecorationLine: 'line-through'}]}>
+            {item.price}$
+          </Text>
+          <Text style={styles.textWhite14}>{item.promo_price}$</Text>
+        </View>
       </View>
     </View>
   );
@@ -113,7 +224,7 @@ function Home({navigation}) {
         <View style={[styles.horizontal, {marginTop: 8}]}>
           <Text style={styles.title}>Đề xuất</Text>
           <TouchableOpacity>
-            <Text style={styles.seeMore}>Xem thêm</Text>
+            <Text style={styles.textLink}>Xem thêm</Text>
           </TouchableOpacity>
         </View>
         <View>
@@ -126,12 +237,14 @@ function Home({navigation}) {
         </View>
         <Text style={[styles.title, {margin: 8}]}>Thể loại</Text>
         <View
-          style={{
-            marginTop: 8,
-            marginHorizontal: 8,
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-          }}>
+          style={[
+            styles.horizontalItem,
+            {
+              marginTop: 8,
+              paddingStart: 8,
+              paddingEnd: 8,
+            },
+          ]}>
           <TouchableOpacity
             style={styles.buttonMenu}
             onPress={() => navigation.navigate('Details')}>
@@ -148,12 +261,14 @@ function Home({navigation}) {
           </TouchableOpacity>
         </View>
         <View
-          style={{
-            marginTop: 8,
-            marginHorizontal: 8,
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-          }}>
+          style={[
+            styles.horizontalItem,
+            {
+              marginTop: 8,
+              paddingStart: 8,
+              paddingEnd: 8,
+            },
+          ]}>
           <TouchableOpacity style={styles.buttonMenu}>
             <Image source={require('../Images/cocktail.png')} />
             <Text style={styles.textMenu}>Special</Text>
@@ -163,8 +278,11 @@ function Home({navigation}) {
             <Text style={styles.textMenu}>Food</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.buttonMenu}>
-            <Image source={require('../Images/menu.png')} />
-            <Text style={styles.textMenu}>More</Text>
+            <Image
+              style={{marginTop: 24}}
+              source={require('../Images/menu.png')}
+            />
+            <Text style={[styles.textMenu, {marginTop: 24}]}>More</Text>
           </TouchableOpacity>
         </View>
         <Text style={[styles.title, {margin: 8}]}>Ưu đãi</Text>
@@ -176,12 +294,66 @@ function Home({navigation}) {
             renderItem={renderItemVoucher}
           />
         </View>
+        <Text style={[styles.title, {margin: 8}]}>Khuyến mãi</Text>
+        <View>
+          <FlatList
+            showsHorizontalScrollIndicator={false}
+            horizontal={false}
+            numColumns={2}
+            data={DATA_SALE}
+            renderItem={renderItemSale}
+          />
+        </View>
       </ScrollView>
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
+  horizontalItem: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  borderBottom8: {
+    borderBottomEndRadius: 8,
+    borderBottomStartRadius: 8,
+    shadowColor: '#000',
+    marginBottom: 8,
+    shadowOffset: {
+      width: 2,
+      height: 2,
+    },
+    shadowOpacity: 0.8,
+    shadowRadius: 8,
+  },
+  borderTop8: {
+    borderTopEndRadius: 8,
+    borderTopStartRadius: 8,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 2,
+      height: 2,
+    },
+    shadowOpacity: 0.8,
+    shadowRadius: 8,
+  },
+  border8: {
+    borderRadius: 8,
+    shadowColor: '#000',
+    marginBottom: 8,
+    shadowOffset: {
+      width: 2,
+      height: 2,
+    },
+    shadowOpacity: 0.8,
+    shadowRadius: 8,
+  },
+  marginItem: {
+    marginTop: 8,
+    marginStart: 4,
+    marginEnd: 4,
+    marginBottom: 8,
+  },
   textMenu: {
     marginTop: 8,
     color: '#E1B9B1',
@@ -191,61 +363,46 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#DDECEC',
-    height: 120,
+    height: 100,
     borderRadius: 8,
     flex: 1,
     marginEnd: 4,
     marginStart: 4,
   },
-  itemTitle: {
+  textBlack14: {
     fontSize: 14,
     fontWeight: '500',
     color: 'black',
-    paddingStart: 8,
-    marginTop: 4,
   },
-  itemPrice: {
+  textWhite14: {
+    fontSize: 14,
+    fontWeight: '500',
+    color: '#ffffff',
+  },
+  textBlack16: {
+    fontSize: 16,
+    fontWeight: '500',
+    color: 'black',
+  },
+  textPink14: {
     fontSize: 14,
     fontWeight: '500',
     color: '#F27F7F',
   },
-  itemStar: {
+  textTitle: {
+    fontSize: 20,
+    fontWeight: '500',
+    color: 'black',
+  },
+  textBlueLight12: {
     fontSize: 12,
     fontWeight: '500',
     color: '#7E8EAA',
   },
-  itemRecommend: {
-    width: 180,
-    height: 240,
-    marginTop: 8,
-    marginStart: 4,
-    marginEnd: 4,
-    borderRadius: 8,
-    backgroundColor: 'white',
-    shadowColor: '#000',
-    marginBottom: 8,
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-  },
-  itemVoucher: {
-    width: 200,
-    height: 190,
-    marginTop: 8,
-    marginStart: 4,
-    marginEnd: 4,
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-  },
   image: {
-    resizeMode: 'stretch',
+    resizeMode: 'cover',
+    overflow: 'hidden',
+    borderRadius: 8,
   },
   title: {
     fontSize: 20,
@@ -258,10 +415,22 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 12,
   },
-  seeMore: {
-    fontSize: 10,
+  textLink: {
+    fontSize: 12,
     color: '#78A1FF',
     textDecorationLine: 'underline',
+  },
+  borderTextRed: {
+    borderRadius: 16,
+    borderColor: '#9b9b9b',
+    borderWidth: 1,
+    padding: 4,
+    color: '#F27F7F',
+    marginTop: 4,
+    alignContent: 'center',
+    alignItems: 'center',
+    textAlign: 'center',
+    width: 80,
   },
 });
 export default Home;

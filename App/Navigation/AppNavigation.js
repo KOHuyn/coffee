@@ -6,15 +6,21 @@ import Home from '../Home/home';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {createStackNavigator} from '@react-navigation/stack';
 import DetailItem from '../DetailItem/detailItem';
+
 const Tab = createBottomTabNavigator();
 const HomeStack = createStackNavigator();
 const LoginStack = createStackNavigator();
 import Login from '../Login/LoginScreen';
+import Cart from '../Cart/cart';
 
 function HomeStackScreen() {
   return (
     <HomeStack.Navigator>
-      <HomeStack.Screen name="Home" component={Home} />
+      <HomeStack.Screen
+        name="Home"
+        component={Home}
+        options={{title: 'Home', headerShown: false}}
+      />
       <HomeStack.Screen name="Details" component={DetailItem} />
     </HomeStack.Navigator>
   );
@@ -23,7 +29,11 @@ function HomeStackScreen() {
 function LoginStackScreen() {
   return (
     <LoginStack.Navigator>
-      <LoginStack.Screen name="login" component={Login} />
+      <LoginStack.Screen
+        name="login"
+        component={Login}
+        options={{title: 'Home', headerShown: false}}
+      />
     </LoginStack.Navigator>
   );
 }
@@ -48,8 +58,8 @@ export default function AppNavigation() {
           },
         })}>
         <Tab.Screen name="Home" component={HomeStackScreen} />
-        <Tab.Screen name="Cart" component={LoginStackScreen} />
-        <Tab.Screen name="Profile" component={Home} />
+        <Tab.Screen name="Cart" component={Cart} />
+        <Tab.Screen name="Profile" component={LoginStackScreen} />
       </Tab.Navigator>
     </NavigationContainer>
   );
