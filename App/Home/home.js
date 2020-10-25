@@ -4,18 +4,22 @@ import {
   StyleSheet,
   ScrollView,
   View,
+  Modal,
   Text,
   Image,
   FlatList,
   RefreshControl,
   TouchableOpacity,
 } from 'react-native';
+import RadioGroup from 'react-native-radio-buttons-group';
+import Icon from 'react-native-vector-icons/Ionicons';
+
 import Domain from '../Api/domain';
 
 const DATA_RECOMMEND = [
   {
     id: 1,
-    img:
+    imgSrc:
       'https://images.immediate.co.uk/production/volatile/sites/30/2020/08/hub-image-coffee-e732616.jpg?quality=90&resize=504,458',
     title: 'First Item',
     price: '2.5$',
@@ -23,7 +27,7 @@ const DATA_RECOMMEND = [
   },
   {
     id: 2,
-    img:
+    imgSrc:
       'https://images.immediate.co.uk/production/volatile/sites/30/2020/08/hub-image-coffee-e732616.jpg?quality=90&resize=504,458',
     title: 'First Item',
     price: '2.5$',
@@ -31,7 +35,7 @@ const DATA_RECOMMEND = [
   },
   {
     id: 3,
-    img:
+    imgSrc:
       'https://images.immediate.co.uk/production/volatile/sites/30/2020/08/hub-image-coffee-e732616.jpg?quality=90&resize=504,458',
     title: 'First Item',
     price: '2.5$',
@@ -40,7 +44,26 @@ const DATA_RECOMMEND = [
 ];
 
 function Home({navigation}) {
-  const [refreshing, setRefreshing] = useState(true);
+  let [dataRadioGroup, setDataRadioGroup] = useState([
+    {
+      label: 'L',
+      value: 2,
+    },
+    {
+      label: 'M',
+      value: 1,
+    },
+    {
+      label: 'S',
+      value: 0,
+    },
+  ]);
+
+  let [countItem, setCountItem] = useState(1);
+  let [priceSize, setPriceSize] = useState(1);
+  const [isShowModal, setShowModal] = useState(false);
+  const [item, setItem] = useState(false);
+  const [refreshing, setRefreshing] = useState(false);
   const [dataRecommend, setDataRecommend] = useState([]);
   const [dataVoucher, setDataVoucher] = useState([]);
   const [dataSale, setDataSale] = useState([]);
@@ -61,6 +84,7 @@ function Home({navigation}) {
       .then((response) => response.json())
       .then((json) => setDataSale(json.data))
       .then(() => setRefreshing(false));
+    console.log(Domain + '/proSale');
   }, []);
   useEffect(() => {
     fetch(Domain + '/sale')
@@ -68,8 +92,13 @@ function Home({navigation}) {
       .then((json) => setDataVoucher(json.data))
       .then(() => setRefreshing(false));
   }, []);
+
   const renderItemRecommend = ({item, index}) => (
-    <TouchableOpacity>
+    <TouchableOpacity
+      onPress={() => {
+        setShowModal(true);
+        setItem(item);
+      }}>
       <View
         style={[
           styles.border8,
@@ -78,7 +107,7 @@ function Home({navigation}) {
         ]}>
         <Image
           style={[{flex: 1, width: 150}, styles.image]}
-          source={{uri: item.img}}
+          source={{uri: item.imgSrc}}
         />
         <View
           style={[styles.horizontalItem, styles.borderBottom8, {padding: 8}]}>
@@ -146,6 +175,131 @@ function Home({navigation}) {
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }>
+        <Modal
+          animationIn="slideInUp"
+          animationOut="slideOutDown"
+          transparent={true}
+          visible={isShowModal}
+          onRequestClose={() => {}}>
+          <View
+            style={{
+              flex: 1,
+              justifyContent: 'center',
+            }}>
+            <View
+              style={{
+                backgroundColor: '#FFFFFF',
+                elevation: 10,
+                borderRadius: 8,
+                margin: 30,
+              }}>
+              <View style={[styles.horizontalItem]}>
+                <View style={{flexDirection: 'row', padding: 16}}>
+                  <Image
+                    style={{
+                      width: 50,
+                      height: 50,
+                      elevation: 5,
+                      borderRadius: 20,
+                      resizeMode: 'stretch',
+                    }}
+                    source={{uri: item.imgSrc}}
+                  />
+                  <View style={{marginStart: 8, alignSelf: 'center'}}>
+                    <Text style={styles.textBlack14}>{item.title}</Text>
+                    <Text style={styles.textPink14}>{item.price}</Text>
+                  </View>
+                </View>
+                <Text
+                  onPress={() => setShowModal(false)}
+                  style={[styles.textPink14, {padding: 8}]}>
+                  Đóng
+                </Text>
+              </View>
+              <Text
+                style={{
+                  backgroundColor: '#F2F2F2',
+                  padding: 4,
+                  paddingStart: 16,
+                }}>
+                Size
+              </Text>
+              <Text>Doing size checkbox</Text>
+              <Text
+                style={{
+                  backgroundColor: '#F2F2F2',
+                  padding: 4,
+                  paddingStart: 16,
+                  marginTop: 8,
+                }}>
+                Giới thiệu
+              </Text>
+              <Text style={{color: '#A1ABBC', padding: 12, fontSize: 12}}>
+                {item.price}
+              </Text>
+              <View style={styles.horizontalItem}>
+                <View style={{flexDirection: 'row', padding: 8}}>
+                  <Text
+                    onPress={() => {
+                      if (countItem === 0) {
+                        setCountItem(0);
+                      } else {
+                        setCountItem((countItem -= 1));
+                      }
+                    }}
+                    style={{
+                      backgroundColor: '#A5A5A5',
+                      paddingStart: 8,
+                      paddingEnd: 8,
+                      paddingTop: 4,
+                      paddingBottom: 4,
+                      borderRadius: 30,
+                    }}>
+                    {' '}
+                    -{' '}
+                  </Text>
+                  <Text
+                    style={{
+                      alignSelf: 'center',
+                      marginStart: 4,
+                      marginEnd: 4,
+                      fontSize: 20,
+                    }}>
+                    {' '}
+                    {countItem}{' '}
+                  </Text>
+                  <Text
+                    onPress={() => setCountItem((countItem += 1))}
+                    style={{
+                      backgroundColor: '#F27F7F',
+                      paddingStart: 6,
+                      paddingEnd: 6,
+                      paddingTop: 4,
+                      paddingBottom: 4,
+                      borderRadius: 30,
+                    }}>
+                    {' '}
+                    +{' '}
+                  </Text>
+                </View>
+                <Text
+                  style={{
+                    alignSelf: 'center',
+                    paddingStart: 30,
+                    paddingEnd: 30,
+                    paddingTop: 8,
+                    paddingBottom: 8,
+                    marginEnd: 16,
+                    borderRadius: 20,
+                    fontSize: 16,
+                    backgroundColor: '#F27F7F',
+                  }}>
+                  {countItem * (3 + 1)}$
+                </Text>
+              </View>
+            </View>
+          </View>
+        </Modal>
         <View style={styles.horizontal}>
           <Image
             source={require('../Images/99coffee.png')}
@@ -289,7 +443,6 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.8,
     shadowRadius: 8,
     elevation: 4,
-
   },
   marginItem: {
     marginTop: 8,
@@ -312,7 +465,6 @@ const styles = StyleSheet.create({
     marginEnd: 4,
     marginStart: 4,
     elevation: 5,
-
   },
   textBlack14: {
     fontSize: 14,

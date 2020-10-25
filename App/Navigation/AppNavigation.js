@@ -5,7 +5,7 @@ import Home from '../Home/home';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {createStackNavigator} from '@react-navigation/stack';
 import DetailItem from '../DetailItem/detailItem';
-
+import BuyItem from '../BuyItem/BuyItem';
 import LoginScreen from '../Login/LoginScreen';
 import RegisterScreen from '../Login/RegisterScreen';
 import UserScreen from '../User/UserScreen';
@@ -15,6 +15,7 @@ import ChangePassword from '../Login/ChangePassword';
 const Tab = createBottomTabNavigator();
 const HomeStack = createStackNavigator();
 const LoginStack = createStackNavigator();
+const CartStack = createStackNavigator();
 import Cart from '../Cart/cart';
 
 function HomeStackScreen() {
@@ -27,6 +28,15 @@ function HomeStackScreen() {
         initialParams={{keyType: 1}}
       />
     </HomeStack.Navigator>
+  );
+}
+
+function CartStackScreen() {
+  return (
+    <CartStack.Navigation screenOptions={{headerShown: false}}>
+      <CartStack.Screen name="Cart" component={Cart} />
+      <CartStack.Screen name="BuyItem" component={BuyItem} />
+    </CartStack.Navigation>
   );
 }
 
@@ -62,7 +72,7 @@ export default function AppNavigation() {
           },
         })}>
         <Tab.Screen name="Home" component={HomeStackScreen} />
-        <Tab.Screen name="Cart" component={Cart} />
+        <Tab.Screen name="Cart" component={BuyItem} />
         <Tab.Screen name="Profile" component={LoginStackScreen} />
       </Tab.Navigator>
     </NavigationContainer>
