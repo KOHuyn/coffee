@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -7,8 +7,10 @@ import {
   Text,
   Image,
   FlatList,
+  RefreshControl,
   TouchableOpacity,
 } from 'react-native';
+import Domain from '../Api/domain';
 
 const DATA_RECOMMEND = [
   {
@@ -36,107 +38,36 @@ const DATA_RECOMMEND = [
     star: 5,
   },
 ];
-const DATA_SALE = [
-  {
-    id: 1,
-    name: 'Phin sua da',
-    Id_type: 1,
-    price: 25,
-    promo_price: 22,
-    imgSrc:
-      'https://images.immediate.co.uk/production/volatile/sites/30/2020/08/hub-image-coffee-e732616.jpg?quality=90&resize=504,458',
-    decription: null,
-  },
-  {
-    id: 2,
-    name: 'Cà phê bạc hà',
-    Id_type: 1,
-    price: 25,
-    promo_price: 22,
-    imgSrc:
-      'https://images.immediate.co.uk/production/volatile/sites/30/2020/08/hub-image-coffee-e732616.jpg?quality=90&resize=504,458',
-    decription: null,
-  },
-  {
-    id: 1,
-    name: 'Phin sua da',
-    Id_type: 1,
-    price: 25,
-    promo_price: 22,
-    imgSrc:
-      'https://images.immediate.co.uk/production/volatile/sites/30/2020/08/hub-image-coffee-e732616.jpg?quality=90&resize=504,458',
-    decription: null,
-  },
-  {
-    id: 2,
-    name: 'Cà phê bạc hà',
-    Id_type: 1,
-    price: 25,
-    promo_price: 22,
-    imgSrc:
-      'https://images.immediate.co.uk/production/volatile/sites/30/2020/08/hub-image-coffee-e732616.jpg?quality=90&resize=504,458',
-    decription: null,
-  },
-  {
-    id: 1,
-    name: 'Phin sua da',
-    Id_type: 1,
-    price: 25,
-    promo_price: 22,
-    imgSrc:
-      'https://images.immediate.co.uk/production/volatile/sites/30/2020/08/hub-image-coffee-e732616.jpg?quality=90&resize=504,458',
-    decription: null,
-  },
-  {
-    id: 2,
-    name: 'Cà phê bạc hà',
-    Id_type: 1,
-    price: 25,
-    promo_price: 22,
-    imgSrc:
-      'https://images.immediate.co.uk/production/volatile/sites/30/2020/08/hub-image-coffee-e732616.jpg?quality=90&resize=504,458',
-    decription: null,
-  },
-];
-const DATA_VOUCHER = [
-  {
-    id: 1,
-    img:
-      'https://images.immediate.co.uk/production/volatile/sites/30/2020/08/hub-image-coffee-e732616.jpg?quality=90&resize=504,458',
-    title: 'Ưu đãi dành riêng 8/3',
-    content: '8/3 này cùng 99Coffee cảm ơn người phụ nữ tôi yêu',
-  },
-  {
-    id: 1,
-    img:
-      'https://images.immediate.co.uk/production/volatile/sites/30/2020/08/hub-image-coffee-e732616.jpg?quality=90&resize=504,458',
-    title: 'Ưu đãi dành riêng 8/3',
-    content: '8/3 này cùng 99Coffee cảm ơn người phụ nữ tôi yêu',
-  },
-  {
-    id: 1,
-    img:
-      'https://images.immediate.co.uk/production/volatile/sites/30/2020/08/hub-image-coffee-e732616.jpg?quality=90&resize=504,458',
-    title: 'Ưu đãi dành riêng 8/3',
-    content: '8/3 này cùng 99Coffee cảm ơn người phụ nữ tôi yêu',
-  },
-  {
-    id: 1,
-    img:
-      'https://images.immediate.co.uk/production/volatile/sites/30/2020/08/hub-image-coffee-e732616.jpg?quality=90&resize=504,458',
-    title: 'Ưu đãi dành riêng 8/3',
-    content: '8/3 này cùng 99Coffee cảm ơn người phụ nữ tôi yêu',
-  },
-  {
-    id: 1,
-    img:
-      'https://images.immediate.co.uk/production/volatile/sites/30/2020/08/hub-image-coffee-e732616.jpg?quality=90&resize=504,458',
-    title: 'Ưu đãi dành riêng 8/3',
-    content: '8/3 này cùng 99Coffee cảm ơn người phụ nữ tôi yêu',
-  },
-];
 
 function Home({navigation}) {
+  const [refreshing, setRefreshing] = useState(true);
+  const [dataRecommend, setDataRecommend] = useState([]);
+  const [dataVoucher, setDataVoucher] = useState([]);
+  const [dataSale, setDataSale] = useState([]);
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+
+    fetch(Domain + '/proSale')
+      .then((response) => response.json())
+      .then((json) => setDataSale(json.data))
+      .then(() => setRefreshing(false));
+    fetch(Domain + '/sale')
+      .then((response) => response.json())
+      .then((json) => setDataVoucher(json.data))
+      .then(() => setRefreshing(false));
+  }, []);
+  useEffect(() => {
+    fetch(Domain + '/proSale')
+      .then((response) => response.json())
+      .then((json) => setDataSale(json.data))
+      .then(() => setRefreshing(false));
+  }, []);
+  useEffect(() => {
+    fetch(Domain + '/sale')
+      .then((response) => response.json())
+      .then((json) => setDataVoucher(json.data))
+      .then(() => setRefreshing(false));
+  }, []);
   const renderItemRecommend = ({item, index}) => (
     <TouchableOpacity>
       <View
@@ -166,12 +97,12 @@ function Home({navigation}) {
       ]}>
       <Image
         style={[styles.image, {flex: 1, width: 200}]}
-        source={{uri: item.img}}
+        source={{uri: item.imgSrc}}
       />
       <View
         style={{marginTop: 4, marginStart: 8, marginEnd: 8, marginBottom: 4}}>
-        <Text style={styles.textTitle}>{item.title}</Text>
-        <Text style={styles.textBlueLight12}>{item.content}</Text>
+        <Text style={styles.textTitle}>{item.nameSales}</Text>
+        <Text style={styles.textBlueLight12}>{item.dercipsion}</Text>
         <TouchableOpacity>
           <Text style={styles.borderTextRed}>Xem thêm</Text>
         </TouchableOpacity>
@@ -210,22 +141,24 @@ function Home({navigation}) {
   );
   return (
     <SafeAreaView>
-      <ScrollView style={{backgroundColor: 'white'}}>
+      <ScrollView
+        style={{backgroundColor: 'white'}}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }>
         <View style={styles.horizontal}>
           <Image
-            source={require('../Images/logo_cf.png')}
-            style={styles.image}
-          />
-          <Image
-            source={require('../Images/profile_avatar.png')}
-            style={styles.image}
+            source={require('../Images/99coffee.png')}
+            style={{
+              height: 50,
+              width: 160,
+              marginTop: 8,
+              resizeMode: 'stretch',
+            }}
           />
         </View>
         <View style={[styles.horizontal, {marginTop: 8}]}>
           <Text style={styles.title}>Đề xuất</Text>
-          <TouchableOpacity>
-            <Text style={styles.textLink}>Xem thêm</Text>
-          </TouchableOpacity>
         </View>
         <View>
           <FlatList
@@ -247,17 +180,21 @@ function Home({navigation}) {
           ]}>
           <TouchableOpacity
             style={styles.buttonMenu}
-            onPress={() => navigation.navigate('Details')}>
+            onPress={() => navigation.navigate('Details', {keyType: 1})}>
             <Image source={require('../Images/coffee-cup.png')} />
-            <Text style={styles.textMenu}>Coffee</Text>
+            <Text style={styles.textMenu}>Cà phê</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.buttonMenu}>
+          <TouchableOpacity
+            style={styles.buttonMenu}
+            onPress={() => navigation.navigate('Details', {keyType: 2})}>
             <Image source={require('../Images/iceblend.png')} />
-            <Text style={styles.textMenu}>Ice Blend</Text>
+            <Text style={styles.textMenu}>Đá bào</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.buttonMenu}>
+          <TouchableOpacity
+            style={styles.buttonMenu}
+            onPress={() => navigation.navigate('Details', {keyType: 3})}>
             <Image source={require('../Images/smoothie.png')} />
-            <Text style={styles.textMenu}>Coffee</Text>
+            <Text style={styles.textMenu}>Sinh tố</Text>
           </TouchableOpacity>
         </View>
         <View
@@ -269,20 +206,24 @@ function Home({navigation}) {
               paddingEnd: 8,
             },
           ]}>
-          <TouchableOpacity style={styles.buttonMenu}>
+          <TouchableOpacity
+            style={styles.buttonMenu}
+            onPress={() => navigation.navigate('Details', {keyType: 4})}>
             <Image source={require('../Images/cocktail.png')} />
-            <Text style={styles.textMenu}>Special</Text>
+            <Text style={styles.textMenu}>Đặc biệt</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.buttonMenu}>
+          <TouchableOpacity
+            style={styles.buttonMenu}
+            onPress={() => navigation.navigate('Details', {keyType: 5})}>
             <Image source={require('../Images/cupcake.png')} />
-            <Text style={styles.textMenu}>Food</Text>
+            <Text style={styles.textMenu}>Đồ ăn</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.buttonMenu}>
             <Image
               style={{marginTop: 24}}
               source={require('../Images/menu.png')}
             />
-            <Text style={[styles.textMenu, {marginTop: 24}]}>More</Text>
+            <Text style={[styles.textMenu, {marginTop: 24}]}>Xem thêm</Text>
           </TouchableOpacity>
         </View>
         <Text style={[styles.title, {margin: 8}]}>Ưu đãi</Text>
@@ -290,7 +231,7 @@ function Home({navigation}) {
           <FlatList
             showsHorizontalScrollIndicator={false}
             horizontal={true}
-            data={DATA_VOUCHER}
+            data={dataVoucher}
             renderItem={renderItemVoucher}
           />
         </View>
@@ -300,7 +241,7 @@ function Home({navigation}) {
             showsHorizontalScrollIndicator={false}
             horizontal={false}
             numColumns={2}
-            data={DATA_SALE}
+            data={dataSale}
             renderItem={renderItemSale}
           />
         </View>
@@ -347,6 +288,8 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.8,
     shadowRadius: 8,
+    elevation: 4,
+
   },
   marginItem: {
     marginTop: 8,
@@ -368,6 +311,8 @@ const styles = StyleSheet.create({
     flex: 1,
     marginEnd: 4,
     marginStart: 4,
+    elevation: 5,
+
   },
   textBlack14: {
     fontSize: 14,

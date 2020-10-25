@@ -12,7 +12,7 @@ import {
   KeyboardAvoidingView,
   Alert,
 } from 'react-native';
-// import AsyncStorage from '@react-native-community/async-storage';
+import { AsyncStorage } from 'react-native';
 import Domain from '../Api/domain';
 import {Component} from 'react';
 // import {StackNavigator} from 'react-navigation';
@@ -25,7 +25,7 @@ export default class LoginScreen extends Component {
             <KeyboardAvoidingView enabled>
               <View style={{alignItems: 'center'}}>
                 <Image
-                  source={require('../Images/logo_cf.png')}
+                  source={require('../Images/99coffee.png')}
                   style={styles.img}
                 />
               </View>
@@ -68,7 +68,7 @@ export default class LoginScreen extends Component {
                   })
                 }>
                 <Text style={styles.registerTextStyle}>
-                  New Here ? Register
+                  Bạn chưa có tài khoản? Đăng ký ngay
                 </Text>
               </TouchableOpacity>
             </KeyboardAvoidingView>
@@ -103,19 +103,17 @@ export default class LoginScreen extends Component {
         })
           .then((res) => res.json())
           .then((res1) => {
-            console.log(res1);
             if (res1.status === 1) {
               var username = res1.message;
-
-              // AsyncStorage.setItem('username', username);
-              // this.props.navigation.navigate('User');
+              AsyncStorage.setItem('username', username);
+              this.props.navigation.navigate('User');
             } else {
               alert(res1.message);
             }
           })
           .catch((err) => {
             console.log(err);
-            alert(err);
+            alert('Server lỗi,vui lòng thử lại sau');
           });
       } else {
         alert('Hãy nhập mật khẩu!!');

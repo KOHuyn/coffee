@@ -1,5 +1,4 @@
 import * as React from 'react';
-import {Text, View} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Home from '../Home/home';
@@ -7,33 +6,38 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import {createStackNavigator} from '@react-navigation/stack';
 import DetailItem from '../DetailItem/detailItem';
 
+import LoginScreen from '../Login/LoginScreen';
+import RegisterScreen from '../Login/RegisterScreen';
+import UserScreen from '../User/UserScreen';
+import EditProfile from '../User/EditProfile';
+import ChangePassword from '../Login/ChangePassword';
+
 const Tab = createBottomTabNavigator();
 const HomeStack = createStackNavigator();
 const LoginStack = createStackNavigator();
-import Login from '../Login/LoginScreen';
 import Cart from '../Cart/cart';
 
 function HomeStackScreen() {
   return (
-    <HomeStack.Navigator>
+    <HomeStack.Navigator screenOptions={{headerShown: false}}>
+      <HomeStack.Screen name="Home" component={Home} />
       <HomeStack.Screen
-        name="Home"
-        component={Home}
-        options={{title: 'Home', headerShown: false}}
+        name="Details"
+        component={DetailItem}
+        initialParams={{keyType: 1}}
       />
-      <HomeStack.Screen name="Details" component={DetailItem} />
     </HomeStack.Navigator>
   );
 }
 
 function LoginStackScreen() {
   return (
-    <LoginStack.Navigator>
-      <LoginStack.Screen
-        name="login"
-        component={Login}
-        options={{title: 'Home', headerShown: false}}
-      />
+    <LoginStack.Navigator screenOptions={{headerShown: false}}>
+      <LoginStack.Screen name="Login" component={LoginScreen} />
+      <LoginStack.Screen name="Register" component={RegisterScreen} />
+      <LoginStack.Screen name="User" component={UserScreen} />
+      <LoginStack.Screen name="Edit" component={EditProfile} />
+      <LoginStack.Screen name="Change" component={ChangePassword} />
     </LoginStack.Navigator>
   );
 }
