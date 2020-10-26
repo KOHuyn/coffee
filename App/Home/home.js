@@ -15,11 +15,13 @@ import Icon from 'react-native-vector-icons/Ionicons';
 
 import Domain from '../Api/domain';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+let listOrder = [];
 
 function Home({navigation}) {
   const [isShowModal, setShowModal] = useState(false);
   const [item, setItem] = useState({
     title: '',
+    idTitle: 0,
     image: '',
     price: 0,
     description: '',
@@ -69,6 +71,7 @@ function Home({navigation}) {
         setShowModal(true);
         setItem({
           title: item.name,
+          idTitle: item.id,
           image: item.imgSrc,
           price: item.price,
           description: item.decripsion,
@@ -119,6 +122,7 @@ function Home({navigation}) {
         setShowModal(true);
         setItem({
           title: item.name,
+          idTitle: item.id,
           image: item.imgSrc,
           price: item.promo_price,
           description: item.decripsion,
@@ -157,6 +161,7 @@ function Home({navigation}) {
   const ShowModalItem = (props) => {
     let [countItem, setCountItem] = useState(1);
     let [priceSize, setPriceSize] = useState(0);
+    let [idSize, setIdSize] = useState(3);
     return (
       <Modal
         animationIn="slideInUp"
@@ -205,22 +210,25 @@ function Home({navigation}) {
             </View>
             <Text style={{padding: 4, backgroundColor: '#F2F2F2'}}>Size</Text>
             <Text
-              style={priceSize === 5000 ? styles.checked : styles.uncheck}
+              style={idSize === 1 ? styles.checked : styles.uncheck}
               onPress={() => {
+                setIdSize(1);
                 setPriceSize(5000);
               }}>
               Size L | +5.000đ
             </Text>
             <Text
-              style={priceSize === 3000 ? styles.checked : styles.uncheck}
+              style={idSize === 2 ? styles.checked : styles.uncheck}
               onPress={() => {
+                setIdSize(2);
                 setPriceSize(3000);
               }}>
               Size M | +3.000đ
             </Text>
             <Text
-              style={priceSize === 0 ? styles.checked : styles.uncheck}
+              style={idSize === 3 ? styles.checked : styles.uncheck}
               onPress={() => {
+                setIdSize(3);
                 setPriceSize(0);
               }}>
               Size S
@@ -296,8 +304,17 @@ function Home({navigation}) {
                   fontSize: 16,
                   color: '#FFFFFF',
                   backgroundColor: '#F27F7F',
-                }}>
-                {countItem * (props.itemModal.price + priceSize)}đ
+                }}
+                onPress={() =>
+                  addToCart({
+                    id_food_drink: props.itemModal.idTitle,
+                    name_food_drink: props.itemModal.title,
+                    count: countItem,
+                    price: countItem * (props.itemModal.price + priceSize),
+                    id_size: idSize,
+                  })
+                }>
+                {countItem * (props.itemModal.price + priceSize)}đ | Thêm
               </Text>
             </View>
           </View>
@@ -305,6 +322,39 @@ function Home({navigation}) {
       </Modal>
     );
   };
+
+  const addToCart = (itemCart) => {
+    listOrder.push(itemCart);
+    setShowModal(false);
+  };
+
+  const CartBuyItemLayout = () => {
+    return (
+      <TouchableOpacity
+        style={{
+          position: 'absolute',
+          bottom: 20,
+          right: 20,
+          elevation: 10,
+          backgroundColor: '#F2F2F2',
+          width: 50,
+          height: 50,
+          borderRadius: 25,
+          justifyContent: 'center',
+          alignItems: 'center',
+          flexDirection: 'column',
+        }}
+        onPress={() => {
+          navigation.navigate('BuyItem', {listOrder: listOrder});
+          listOrder = [];
+        }}>
+        <View>
+          <Ionicons name="cart-outline" size={20} color="#78A1FF" />
+        </View>
+      </TouchableOpacity>
+    );
+  };
+
   return (
     <View style={{position: 'relative', flex: 1}}>
       <SafeAreaView />
@@ -418,27 +468,7 @@ function Home({navigation}) {
           />
         </View>
       </ScrollView>
-      <TouchableOpacity
-        style={{
-          position: 'absolute',
-          bottom: 20,
-          right: 20,
-          elevation: 10,
-          backgroundColor: '#F2F2F2',
-          width: 50,
-          height: 50,
-          borderRadius: 25,
-          justifyContent: 'center',
-          alignItems: 'center',
-          flexDirection: 'column',
-        }}
-        onPress={() => {
-          navigation.navigate('Cart');
-        }}>
-        <View>
-          <Ionicons name="cart-outline" size={20} color="#78A1FF" />
-        </View>
-      </TouchableOpacity>
+      {listOrder.length > 0 ? <CartBuyItemLayout /> : null}
     </View>
   );
 }

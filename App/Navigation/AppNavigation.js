@@ -17,7 +17,6 @@ const HomeStack = createStackNavigator();
 const LoginStack = createStackNavigator();
 const CartStack = createStackNavigator();
 import Cart from '../Cart/cart';
-
 function HomeStackScreen() {
   return (
     <HomeStack.Navigator screenOptions={{headerShown: false}}>
@@ -27,6 +26,7 @@ function HomeStackScreen() {
         component={DetailItem}
         initialParams={{keyType: 1}}
       />
+      <HomeStack.Screen name="BuyItem" component={BuyItem} />
     </HomeStack.Navigator>
   );
 }
@@ -35,7 +35,6 @@ function CartStackScreen() {
   return (
     <CartStack.Navigation screenOptions={{headerShown: false}}>
       <CartStack.Screen name="Cart" component={Cart} />
-      <CartStack.Screen name="BuyItem" component={BuyItem} />
     </CartStack.Navigation>
   );
 }

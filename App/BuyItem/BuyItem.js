@@ -14,7 +14,58 @@ import {
 import Domain from '../Api/domain';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-export default function BuyItem({navigation}) {
+export default function BuyItem({route, navigation}) {
+  const {listOrder} = route.params;
+  const [priceTotal, setPriceTotal] = useState(0);
+  const ItemCart = (item, index) => {
+    return (
+      <View style={[styles.horizontalItem, {marginTop: 4}]}>
+        <View style={{flexDirection: 'row'}}>
+          <Text
+            style={{
+              borderColor: '#979797',
+              borderWidth: 1,
+              paddingStart: 8,
+              paddingEnd: 8,
+              paddingTop: 4,
+              fontSize: 16,
+              paddingBottom: 4,
+              justifyContent: 'center',
+              alignContent: 'center',
+              alignItems: 'center',
+            }}>
+            {item.item.count}
+          </Text>
+          <View style={{alignSelf: 'center', marginStart: 8}}>
+            <Text style={{fontSize: 16, color: '#000000'}}>
+              {item.item.name_food_drink}
+            </Text>
+            <Text style={{fontSize: 12, color: '#979797'}}>
+              Size: {item.item.id_size}
+            </Text>
+          </View>
+        </View>
+        <Text
+          style={{
+            alignSelf: 'center',
+            color: '#000000',
+            fontSize: 14,
+          }}>
+          {item.item.price}đ
+        </Text>
+      </View>
+    );
+  };
+
+  function totalMoney(list) {
+    var price = 0;
+    var i;
+    for (i = 0; i < list.length - 1; i++) {
+      price += list[i].item.price;
+    }
+    return price;
+  }
+
   return (
     <SafeAreaView>
       <View style={[styles.horizontalItem, {backgroundColor: '#DDECEC'}]}>
@@ -58,40 +109,10 @@ export default function BuyItem({navigation}) {
         <Text style={{padding: 4}}>Chi tiết đơn hàng</Text>
       </View>
       <View style={{backgroundColor: '#FFFFFF', padding: 8}}>
-        <View style={[styles.horizontalItem]}>
-          <View style={{flexDirection: 'row'}}>
-            <Text
-              style={{
-                borderColor: '#979797',
-                borderWidth: 1,
-                paddingStart: 8,
-                paddingEnd: 8,
-                paddingTop: 4,
-                fontSize: 16,
-                paddingBottom: 4,
-                justifyContent: 'center',
-                alignContent: 'center',
-                alignItems: 'center',
-              }}>
-              5
-            </Text>
-            <View style={{alignSelf: 'center', marginStart: 8}}>
-              <Text style={{fontSize: 16, color: '#000000'}}>Phin sữa đá</Text>
-              <Text style={{fontSize: 12, color: '#979797'}}>Size: M</Text>
-            </View>
-          </View>
-          <Text
-            style={{
-              alignSelf: 'center',
-              color: '#000000',
-              fontSize: 20,
-            }}>
-            3$
-          </Text>
-        </View>
+        <FlatList renderItem={ItemCart} data={listOrder} />
         <View style={[styles.horizontalItem, {marginTop: 8}]}>
           <Text style={styles.text12}>Tạm tính</Text>
-          <Text style={styles.text12}>3$</Text>
+          <Text style={styles.text12}>{priceTotal}đ</Text>
         </View>
         <View style={[styles.horizontalItem, {marginTop: 8}]}>
           <Text style={styles.text12}>Phí giao hàng</Text>
