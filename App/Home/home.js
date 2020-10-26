@@ -11,58 +11,19 @@ import {
   RefreshControl,
   TouchableOpacity,
 } from 'react-native';
-import RadioGroup from 'react-native-radio-buttons-group';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import Domain from '../Api/domain';
-
-const DATA_RECOMMEND = [
-  {
-    id: 1,
-    imgSrc:
-      'https://images.immediate.co.uk/production/volatile/sites/30/2020/08/hub-image-coffee-e732616.jpg?quality=90&resize=504,458',
-    title: 'First Item',
-    price: '2.5$',
-    star: 5,
-  },
-  {
-    id: 2,
-    imgSrc:
-      'https://images.immediate.co.uk/production/volatile/sites/30/2020/08/hub-image-coffee-e732616.jpg?quality=90&resize=504,458',
-    title: 'First Item',
-    price: '2.5$',
-    star: 5,
-  },
-  {
-    id: 3,
-    imgSrc:
-      'https://images.immediate.co.uk/production/volatile/sites/30/2020/08/hub-image-coffee-e732616.jpg?quality=90&resize=504,458',
-    title: 'First Item',
-    price: '2.5$',
-    star: 5,
-  },
-];
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 function Home({navigation}) {
-  let [dataRadioGroup, setDataRadioGroup] = useState([
-    {
-      label: 'L',
-      value: 2,
-    },
-    {
-      label: 'M',
-      value: 1,
-    },
-    {
-      label: 'S',
-      value: 0,
-    },
-  ]);
-
-  let [countItem, setCountItem] = useState(1);
-  let [priceSize, setPriceSize] = useState(1);
   const [isShowModal, setShowModal] = useState(false);
-  const [item, setItem] = useState(false);
+  const [item, setItem] = useState({
+    title: '',
+    image: '',
+    price: 0,
+    description: '',
+  });
   const [refreshing, setRefreshing] = useState(false);
   const [dataRecommend, setDataRecommend] = useState([]);
   const [dataVoucher, setDataVoucher] = useState([]);
@@ -78,6 +39,10 @@ function Home({navigation}) {
       .then((response) => response.json())
       .then((json) => setDataVoucher(json.data))
       .then(() => setRefreshing(false));
+    fetch(Domain + '/menu/7')
+      .then((response) => response.json())
+      .then((json) => setDataRecommend(json.data))
+      .then(() => setRefreshing(false));
   }, []);
   useEffect(() => {
     fetch(Domain + '/proSale')
@@ -92,12 +57,22 @@ function Home({navigation}) {
       .then((json) => setDataVoucher(json.data))
       .then(() => setRefreshing(false));
   }, []);
-
+  useEffect(() => {
+    fetch(Domain + '/menu/7')
+      .then((response) => response.json())
+      .then((json) => setDataRecommend(json.data))
+      .then(() => setRefreshing(false));
+  }, []);
   const renderItemRecommend = ({item, index}) => (
     <TouchableOpacity
       onPress={() => {
         setShowModal(true);
-        setItem(item);
+        setItem({
+          title: item.name,
+          image: item.imgSrc,
+          price: item.price,
+          description: item.decripsion,
+        });
       }}>
       <View
         style={[
@@ -109,10 +84,9 @@ function Home({navigation}) {
           style={[{flex: 1, width: 150}, styles.image]}
           source={{uri: item.imgSrc}}
         />
-        <View
-          style={[styles.horizontalItem, styles.borderBottom8, {padding: 8}]}>
-          <Text style={styles.textBlack14}>{item.title}</Text>
-          <Text style={styles.textPink14}>{item.price}</Text>
+        <View style={[styles.borderBottom8, {padding: 8}]}>
+          <Text style={styles.textBlack14}>{item.name}</Text>
+          <Text style={styles.textPink14}>{item.price}đ</Text>
         </View>
       </View>
     </TouchableOpacity>
@@ -139,167 +113,210 @@ function Home({navigation}) {
     </View>
   );
   const renderItemSale = ({item, index}) => (
-    <View
-      style={[
-        styles.border8,
-        styles.marginItem,
-        {backgroundColor: '#7E8EAA', height: 200, flex: 0.5},
-      ]}>
-      <Image style={[styles.image, {flex: 1}]} source={{uri: item.imgSrc}} />
-      <View style={[styles.borderBottom8]}>
-        <Text
-          style={[
-            styles.textBlack16,
-            {fontWeight: 'bold', textAlign: 'center', marginTop: 4},
-          ]}>
-          {item.name}
-        </Text>
-        <View
-          style={[
-            styles.horizontalItem,
-            {paddingStart: 8, paddingEnd: 8, paddingBottom: 8},
-          ]}>
+    <TouchableOpacity
+      style={[styles.marginItem, {height: 200, flex: 0.5}]}
+      onPress={() => {
+        setShowModal(true);
+        setItem({
+          title: item.name,
+          image: item.imgSrc,
+          price: item.promo_price,
+          description: item.decripsion,
+        });
+      }}>
+      <View style={[styles.border8, {backgroundColor: '#7E8EAA', height: 200}]}>
+        <Image style={[styles.image, {flex: 1}]} source={{uri: item.imgSrc}} />
+        <View style={[styles.borderBottom8]}>
           <Text
-            style={[styles.textPink14, {textDecorationLine: 'line-through'}]}>
-            {item.price}$
+            style={[
+              styles.textWhite14,
+              {
+                fontWeight: 'bold',
+                fontSize: 16,
+                textAlign: 'center',
+                marginTop: 4,
+              },
+            ]}>
+            {item.name}
           </Text>
-          <Text style={styles.textWhite14}>{item.promo_price}$</Text>
+          <View
+            style={[
+              styles.horizontalItem,
+              {paddingStart: 8, paddingEnd: 8, paddingBottom: 8},
+            ]}>
+            <Text
+              style={[styles.textPink14, {textDecorationLine: 'line-through'}]}>
+              {item.price}đ
+            </Text>
+            <Text style={styles.textWhite14}>{item.promo_price}đ</Text>
+          </View>
         </View>
       </View>
-    </View>
+    </TouchableOpacity>
   );
-  return (
-    <SafeAreaView>
-      <ScrollView
-        style={{backgroundColor: 'white'}}
-        refreshControl={
-          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-        }>
-        <Modal
-          animationIn="slideInUp"
-          animationOut="slideOutDown"
-          transparent={true}
-          visible={isShowModal}
-          onRequestClose={() => {}}>
+  const ShowModalItem = (props) => {
+    let [countItem, setCountItem] = useState(1);
+    let [priceSize, setPriceSize] = useState(0);
+    return (
+      <Modal
+        animationIn="slideInUp"
+        animationOut="slideOutDown"
+        transparent={true}
+        visible={props.isShowModalItem}
+        onRequestClose={() => {}}>
+        <View
+          style={{
+            flex: 1,
+            justifyContent: 'center',
+          }}>
           <View
             style={{
-              flex: 1,
-              justifyContent: 'center',
+              backgroundColor: '#FFFFFF',
+              elevation: 10,
+              borderRadius: 8,
+              margin: 30,
             }}>
-            <View
-              style={{
-                backgroundColor: '#FFFFFF',
-                elevation: 10,
-                borderRadius: 8,
-                margin: 30,
-              }}>
-              <View style={[styles.horizontalItem]}>
-                <View style={{flexDirection: 'row', padding: 16}}>
-                  <Image
-                    style={{
-                      width: 50,
-                      height: 50,
-                      elevation: 5,
-                      borderRadius: 20,
-                      resizeMode: 'stretch',
-                    }}
-                    source={{uri: item.imgSrc}}
-                  />
-                  <View style={{marginStart: 8, alignSelf: 'center'}}>
-                    <Text style={styles.textBlack14}>{item.title}</Text>
-                    <Text style={styles.textPink14}>{item.price}</Text>
-                  </View>
+            <View style={[styles.horizontalItem]}>
+              <View style={{flexDirection: 'row', padding: 16}}>
+                <Image
+                  style={{
+                    width: 50,
+                    height: 50,
+                    elevation: 5,
+                    borderRadius: 20,
+                    resizeMode: 'stretch',
+                  }}
+                  source={{uri: props.itemModal.image}}
+                />
+                <View style={{marginStart: 8, alignSelf: 'center'}}>
+                  <Text style={styles.textBlack14}>
+                    {props.itemModal.title}
+                  </Text>
+                  <Text style={styles.textPink14}>
+                    {props.itemModal.price}đ
+                  </Text>
                 </View>
-                <Text
-                  onPress={() => setShowModal(false)}
-                  style={[styles.textPink14, {padding: 8}]}>
-                  Đóng
-                </Text>
               </View>
               <Text
-                style={{
-                  backgroundColor: '#F2F2F2',
-                  padding: 4,
-                  paddingStart: 16,
-                }}>
-                Size
+                onPress={() => setShowModal(false)}
+                style={[styles.textPink14, {padding: 8}]}>
+                Đóng
               </Text>
-              <Text>Doing size checkbox</Text>
-              <Text
-                style={{
-                  backgroundColor: '#F2F2F2',
-                  padding: 4,
-                  paddingStart: 16,
-                  marginTop: 8,
-                }}>
-                Giới thiệu
-              </Text>
-              <Text style={{color: '#A1ABBC', padding: 12, fontSize: 12}}>
-                {item.price}
-              </Text>
-              <View style={styles.horizontalItem}>
-                <View style={{flexDirection: 'row', padding: 8}}>
-                  <Text
-                    onPress={() => {
-                      if (countItem === 0) {
-                        setCountItem(0);
-                      } else {
-                        setCountItem((countItem -= 1));
-                      }
-                    }}
-                    style={{
-                      backgroundColor: '#A5A5A5',
-                      paddingStart: 8,
-                      paddingEnd: 8,
-                      paddingTop: 4,
-                      paddingBottom: 4,
-                      borderRadius: 30,
-                    }}>
-                    {' '}
-                    -{' '}
-                  </Text>
-                  <Text
-                    style={{
-                      alignSelf: 'center',
-                      marginStart: 4,
-                      marginEnd: 4,
-                      fontSize: 20,
-                    }}>
-                    {' '}
-                    {countItem}{' '}
-                  </Text>
-                  <Text
-                    onPress={() => setCountItem((countItem += 1))}
-                    style={{
-                      backgroundColor: '#F27F7F',
-                      paddingStart: 6,
-                      paddingEnd: 6,
-                      paddingTop: 4,
-                      paddingBottom: 4,
-                      borderRadius: 30,
-                    }}>
-                    {' '}
-                    +{' '}
-                  </Text>
-                </View>
+            </View>
+            <Text style={{padding: 4, backgroundColor: '#F2F2F2'}}>Size</Text>
+            <Text
+              style={priceSize === 5000 ? styles.checked : styles.uncheck}
+              onPress={() => {
+                setPriceSize(5000);
+              }}>
+              Size L | +5.000đ
+            </Text>
+            <Text
+              style={priceSize === 3000 ? styles.checked : styles.uncheck}
+              onPress={() => {
+                setPriceSize(3000);
+              }}>
+              Size M | +3.000đ
+            </Text>
+            <Text
+              style={priceSize === 0 ? styles.checked : styles.uncheck}
+              onPress={() => {
+                setPriceSize(0);
+              }}>
+              Size S
+            </Text>
+            <Text
+              style={{
+                backgroundColor: '#F2F2F2',
+                padding: 4,
+                paddingStart: 16,
+                marginTop: 8,
+              }}>
+              Giới thiệu
+            </Text>
+            <Text style={{color: '#A1ABBC', padding: 12, fontSize: 12}}>
+              {props.itemModal.description}
+            </Text>
+            <View style={styles.horizontalItem}>
+              <View style={{flexDirection: 'row', padding: 8}}>
+                <Text
+                  onPress={() => {
+                    if (countItem === 0) {
+                      setCountItem(0);
+                    } else {
+                      setCountItem((countItem -= 1));
+                    }
+                  }}
+                  style={{
+                    backgroundColor: '#A5A5A5',
+                    color: '#FFFFFF',
+                    paddingStart: 8,
+                    paddingEnd: 8,
+                    paddingTop: 4,
+                    paddingBottom: 4,
+                    borderRadius: 30,
+                  }}>
+                  {' '}
+                  -{' '}
+                </Text>
                 <Text
                   style={{
                     alignSelf: 'center',
-                    paddingStart: 30,
-                    paddingEnd: 30,
-                    paddingTop: 8,
-                    paddingBottom: 8,
-                    marginEnd: 16,
-                    borderRadius: 20,
-                    fontSize: 16,
-                    backgroundColor: '#F27F7F',
+                    marginStart: 4,
+                    marginEnd: 4,
+                    fontSize: 20,
                   }}>
-                  {countItem * (3 + 1)}$
+                  {' '}
+                  {countItem}{' '}
+                </Text>
+                <Text
+                  onPress={() => setCountItem((countItem += 1))}
+                  style={{
+                    backgroundColor: '#F27F7F',
+                    color: '#FFFFFF',
+                    paddingStart: 6,
+                    paddingEnd: 6,
+                    paddingTop: 4,
+                    paddingBottom: 4,
+                    borderRadius: 30,
+                  }}>
+                  {' '}
+                  +{' '}
                 </Text>
               </View>
+              <Text
+                style={{
+                  alignSelf: 'center',
+                  paddingStart: 30,
+                  paddingEnd: 30,
+                  paddingTop: 8,
+                  paddingBottom: 8,
+                  marginEnd: 16,
+                  borderRadius: 20,
+                  fontSize: 16,
+                  color: '#FFFFFF',
+                  backgroundColor: '#F27F7F',
+                }}>
+                {countItem * (props.itemModal.price + priceSize)}đ
+              </Text>
             </View>
           </View>
-        </Modal>
+        </View>
+      </Modal>
+    );
+  };
+  return (
+    <View style={{position: 'relative', flex: 1}}>
+      <SafeAreaView />
+      <ScrollView
+        style={{
+          backgroundColor: 'white',
+          flex: 1,
+          alignSelf: 'stretch',
+        }}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }>
         <View style={styles.horizontal}>
           <Image
             source={require('../Images/99coffee.png')}
@@ -311,6 +328,7 @@ function Home({navigation}) {
             }}
           />
         </View>
+        <ShowModalItem itemModal={item} isShowModalItem={isShowModal} />
         <View style={[styles.horizontal, {marginTop: 8}]}>
           <Text style={styles.title}>Đề xuất</Text>
         </View>
@@ -318,7 +336,7 @@ function Home({navigation}) {
           <FlatList
             showsHorizontalScrollIndicator={false}
             horizontal={true}
-            data={DATA_RECOMMEND}
+            data={dataRecommend}
             renderItem={renderItemRecommend}
           />
         </View>
@@ -400,7 +418,28 @@ function Home({navigation}) {
           />
         </View>
       </ScrollView>
-    </SafeAreaView>
+      <TouchableOpacity
+        style={{
+          position: 'absolute',
+          bottom: 20,
+          right: 20,
+          elevation: 10,
+          backgroundColor: '#F2F2F2',
+          width: 50,
+          height: 50,
+          borderRadius: 25,
+          justifyContent: 'center',
+          alignItems: 'center',
+          flexDirection: 'column',
+        }}
+        onPress={() => {
+          navigation.navigate('Cart');
+        }}>
+        <View>
+          <Ionicons name="cart-outline" size={20} color="#78A1FF" />
+        </View>
+      </TouchableOpacity>
+    </View>
   );
 }
 
@@ -528,6 +567,22 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     textAlign: 'center',
     width: 80,
+  },
+  checked: {
+    marginTop: 4,
+    backgroundColor: '#F27F7F',
+    borderRadius: 4,
+    padding: 4,
+    color: 'white',
+  },
+  uncheck: {
+    marginTop: 4,
+    backgroundColor: '#FFFFFF',
+    borderRadius: 4,
+    color: 'black',
+    padding: 4,
+    borderWidth: 1,
+    borderColor: '#F27F7F',
   },
 });
 export default Home;

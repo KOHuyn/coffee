@@ -72,7 +72,7 @@ export default function AppNavigation() {
           },
         })}>
         <Tab.Screen name="Home" component={HomeStackScreen} />
-        <Tab.Screen name="Cart" component={BuyItem} />
+        <Tab.Screen name="Cart" component={Cart} />
         <Tab.Screen name="Profile" component={LoginStackScreen} />
       </Tab.Navigator>
     </NavigationContainer>

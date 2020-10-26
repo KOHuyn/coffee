@@ -13,16 +13,20 @@ import ScrollableTabView, {
   DefaultTabBar,
   ScrollableTabBar,
 } from 'react-native-scrollable-tab-view';
+const DATA_BILL = [
+    {
+        name:'',
+        date:'2020/09/10',
+        count:3
+    }
+]
 const Cart: () => React$Node = () => {
   return (
-    <ScrollableTabView renderTabBar={() => <ScrollableTabBar />}>
-      <ScrollView tabLabel="iOS">
-        <Text>ok</Text>
-      </ScrollView>
-      <ScrollView tabLabel="Android">
-        <Text>oki</Text>
-      </ScrollView>
-    </ScrollableTabView>
+    <View style={{flex: 1}}>
+      <SafeAreaView />
+      <FlatList
+      data={} />
+    </View>
   );
 };
 export default Cart;
