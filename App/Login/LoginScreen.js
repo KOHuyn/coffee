@@ -12,7 +12,7 @@ import {
   KeyboardAvoidingView,
   Alert,
 } from 'react-native';
-import { AsyncStorage } from 'react-native';
+import {AsyncStorage} from 'react-native';
 import Domain from '../Api/domain';
 import {Component} from 'react';
 // import {StackNavigator} from 'react-navigation';

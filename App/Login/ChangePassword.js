@@ -12,7 +12,8 @@ import {
   KeyboardAvoidingView,
 } from 'react-native';
 import {Component} from 'react';
-import { AsyncStorage } from 'react-native';
+import {AsyncStorage} from 'react-native';
+import Domain from '../Api/domain';
 
 class ChangePassword extends Component {
   constructor(props) {
@@ -35,7 +36,7 @@ class ChangePassword extends Component {
   }
   loadData = async () => {
     var values = await AsyncStorage.getItem('username');
-    var url = 'http://localhost:8888/api/user/' + values;
+    var url = Domain + '/user/' + values;
     console.log(url);
     fetch(url, {
       method: 'GET',

@@ -10,7 +10,9 @@ import {
   KeyboardAvoidingView,
   Alert,
 } from 'react-native';
-import { AsyncStorage } from 'react-native';
+import {AsyncStorage} from 'react-native';
+import Domain from '../Api/domain';
+
 export default class UserScreen extends Component {
   constructor(props) {
     super(props);
@@ -31,7 +33,7 @@ export default class UserScreen extends Component {
   loadData = async () => {
     var values = await AsyncStorage.getItem('username');
     this.setState({username: values});
-    var url = 'http://localhost:8888/api/user/' + this.state.username;
+    var url = Domain + '/user/' + this.state.username;
     console.log(url);
     fetch(url, {
       method: 'GET',

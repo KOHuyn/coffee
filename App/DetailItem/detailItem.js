@@ -22,6 +22,7 @@ export default function DetailItem({route, navigation}) {
   let [idSize, setIdSize] = useState(3);
   const [item, setItem] = useState({
     title: '',
+    idTitle: 0,
     image: '',
     price: 0,
     description: '',
@@ -56,6 +57,7 @@ export default function DetailItem({route, navigation}) {
     setShowModal(true);
     setItem({
       title: item.name,
+      idTitle: item.id,
       image: item.imgSrc,
       price: item.price,
       description: item.decripsion,
