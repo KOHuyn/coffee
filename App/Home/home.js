@@ -18,6 +18,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 let listOrder = [];
 
 function Home({navigation}) {
+  const [isShowCart, setShowCart] = useState(false);
   const [isShowModal, setShowModal] = useState(false);
   const [item, setItem] = useState({
     title: '',
@@ -326,6 +327,7 @@ function Home({navigation}) {
   const addToCart = (itemCart) => {
     listOrder.push(itemCart);
     setShowModal(false);
+    setShowCart(true);
   };
 
   const CartBuyItemLayout = () => {
@@ -347,6 +349,7 @@ function Home({navigation}) {
         onPress={() => {
           navigation.navigate('BuyItem', {listOrder: listOrder});
           listOrder = [];
+          setShowCart(false);
         }}>
         <View>
           <Ionicons name="cart-outline" size={20} color="#78A1FF" />
@@ -468,7 +471,7 @@ function Home({navigation}) {
           />
         </View>
       </ScrollView>
-      {listOrder.length > 0 ? <CartBuyItemLayout /> : null}
+      {isShowCart ? <CartBuyItemLayout /> : null}
     </View>
   );
 }

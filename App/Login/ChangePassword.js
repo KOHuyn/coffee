@@ -64,7 +64,7 @@ class ChangePassword extends Component {
   update = () => {
     if (this.state.old === this.state.password) {
       if (this.state.new1 === this.state.new2) {
-        var url = 'http://localhost:8888/api/user/' + this.state.username;
+        var url = Domain+'/user/' + this.state.username;
         console.log(url);
         fetch(url, {
           method: 'PUT',
@@ -110,7 +110,7 @@ class ChangePassword extends Component {
               source={require('../Images/99coffee.png')}
               style={styles.img}
             />
-            <Text style={styles.name}>Change Password</Text>
+            <Text style={styles.name}>Đổi mật khẩu</Text>
           </View>
           <KeyboardAvoidingView enabled>
             <View style={styles.SectionStyle}>
@@ -119,8 +119,8 @@ class ChangePassword extends Component {
                 value={this.state.old}
                 onChangeText={(password) => this.setState({old: password})}
                 secureTextEntry={true}
-                underlineColorAndroid="#FFFFFF"
-                placeholder="Enter Password"
+                underlineColorAndroid="transparent"
+                placeholder="Mật khẩu cũ"
                 keyboardType="default"
               />
             </View>
@@ -130,8 +130,8 @@ class ChangePassword extends Component {
                 value={this.state.new1}
                 onChangeText={(password) => this.setState({new1: password})}
                 secureTextEntry={true}
-                underlineColorAndroid="#FFFFFF"
-                placeholder="Enter Password"
+                underlineColorAndroid="transparent"
+                placeholder="Mật khẩu mới"
                 keyboardType="default"
               />
             </View>
@@ -141,8 +141,8 @@ class ChangePassword extends Component {
                 value={this.state.new2}
                 onChangeText={(password) => this.setState({new2: password})}
                 secureTextEntry={true}
-                underlineColorAndroid="#FFFFFF"
-                placeholder="Enter Password"
+                underlineColorAndroid="transparent"
+                placeholder="Nhập lại mật khẩu"
                 keyboardType="default"
               />
             </View>
@@ -150,7 +150,7 @@ class ChangePassword extends Component {
               style={styles.buttonStyle}
               activeOpacity={0.5}
               onPress={this.update}>
-              <Text style={styles.buttonTextStyle}>Change Password</Text>
+              <Text style={styles.buttonTextStyle}>Đổi mật khẩu</Text>
             </TouchableOpacity>
           </KeyboardAvoidingView>
         </ScrollView>
@@ -174,10 +174,10 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
   buttonStyle: {
-    backgroundColor: '#7DE24E',
+    backgroundColor: '#E1B9B1',
     borderWidth: 0,
     color: 'black',
-    borderColor: '#7DE24E',
+    borderColor: '#E1B9B1',
     height: 40,
     alignItems: 'center',
     borderRadius: 30,

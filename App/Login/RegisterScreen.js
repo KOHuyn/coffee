@@ -96,10 +96,10 @@ export default class RegisterScreen extends Component {
             <View style={styles.SectionStyle}>
               <TextInput
                 style={styles.inputStyle}
-                underlineColorAndroid="gray"
+                underlineColorAndroid="transparent"
                 value={this.state.username}
                 onChangeText={(username) => this.setState({username: username})}
-                placeholder="Enter UserName"
+                placeholder="Tên đăng nhập"
                 keyboardType="default"
                 returnKeyType="next"
               />
@@ -108,20 +108,20 @@ export default class RegisterScreen extends Component {
               <TextInput
                 style={styles.inputStyle}
                 secureTextEntry={true}
-                underlineColorAndroid="gray"
+                underlineColorAndroid="transparent"
                 value={this.state.password}
                 onChangeText={(password) => this.setState({password: password})}
-                placeholder="Enter Password"
+                placeholder="Mật khẩu"
                 keyboardType="default"
               />
             </View>
             <View style={styles.SectionStyle}>
               <TextInput
                 style={styles.inputStyle}
-                underlineColorAndroid="gray"
+                underlineColorAndroid="transparent"
                 value={this.state.fullName}
                 onChangeText={(fullName) => this.setState({fullName: fullName})}
-                placeholder="Enter Full Name"
+                placeholder="Tên của bạn"
                 keyboardType="default"
                 returnKeyType="next"
               />
@@ -129,10 +129,10 @@ export default class RegisterScreen extends Component {
             <View style={styles.SectionStyle}>
               <TextInput
                 style={styles.inputStyle}
-                underlineColorAndroid="gray"
+                underlineColorAndroid="transparent"
                 value={this.state.address}
                 onChangeText={(address) => this.setState({address: address})}
-                placeholder="Enter Address"
+                placeholder="Địa chỉ"
                 keyboardType="default"
                 returnKeyType="next"
               />
@@ -140,10 +140,10 @@ export default class RegisterScreen extends Component {
             <View style={styles.SectionStyle}>
               <TextInput
                 style={styles.inputStyle}
-                underlineColorAndroid="gray"
+                underlineColorAndroid="transparent"
                 value={this.state.phone}
                 onChangeText={(phone) => this.setState({phone: phone})}
-                placeholder="Enter Phone"
+                placeholder="Số điện thoại"
                 keyboardType="numeric"
                 returnKeyType="next"
               />
@@ -152,7 +152,7 @@ export default class RegisterScreen extends Component {
               style={styles.buttonStyle}
               activeOpacity={0.5}
               onPress={this.register}>
-              <Text style={styles.buttonTextStyle}>REGISTER</Text>
+              <Text style={styles.buttonTextStyle}>Đăng ký ngay</Text>
             </TouchableOpacity>
           </KeyboardAvoidingView>
         </ScrollView>
@@ -171,10 +171,10 @@ const styles = StyleSheet.create({
     margin: 10,
   },
   buttonStyle: {
-    backgroundColor: '#7DE24E',
+    backgroundColor: '#E1B9B1',
     borderWidth: 0,
     color: 'black',
-    borderColor: '#7DE24E',
+    borderColor: '#E1B9B1',
     height: 40,
     alignItems: 'center',
     borderRadius: 30,

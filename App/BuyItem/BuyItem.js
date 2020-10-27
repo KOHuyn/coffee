@@ -196,6 +196,7 @@ export default function BuyItem({route, navigation}) {
     })
       .then((res) => res.json())
       .then((json) => {
+        console.log(json);
         if (json.status === 200) {
           alert(
             'Mua hàng thành công.\nBạn đợi 15p nữa shipper sẽ giao tới nhé',

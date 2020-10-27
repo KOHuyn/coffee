@@ -51,7 +51,7 @@ class EditProfile extends Component {
           username: res1.username,
           password: res1.password,
           phone: res1.phone,
-          fullName: res1.fullName,
+          fullName: res1.fullname,
           address: res1.adress,
         });
       })
@@ -60,11 +60,9 @@ class EditProfile extends Component {
         alert(err);
       });
   };
-  set = () => {
-    this.setState({address: this.state.address, phone: this.state.phone});
-  };
+
   update = () => {
-    var url = 'http://localhost:8888/api/user/' + this.state.username;
+    var url = Domain + '/user/' + this.state.username;
     console.log(url);
     fetch(url, {
       method: 'PUT',
@@ -85,7 +83,7 @@ class EditProfile extends Component {
         console.log(res1);
         if (res1.status === 1) {
           alert('Cập nhật thành công');
-          this.props.navigation.navigate('User', this.set());
+          this.props.navigation.navigate('User');
         } else {
           alert('Cập nhật thất bại');
         }
@@ -104,16 +102,16 @@ class EditProfile extends Component {
               source={require('../Images/99coffee.png')}
               style={styles.img}
             />
-            <Text style={styles.name}>Edit Profile</Text>
+            <Text style={styles.name}>Đổi thông tin liên hệ</Text>
           </View>
           <KeyboardAvoidingView enabled>
             <View style={styles.SectionStyle}>
               <TextInput
                 style={styles.inputStyle}
-                underlineColorAndroid="gray"
+                underlineColorAndroid="transparent"
                 value={this.state.fullName}
                 onChangeText={(fullName) => this.setState({fullName: fullName})}
-                placeholder="Enter Full Name"
+                placeholder="Tên của bạn"
                 keyboardType="default"
                 returnKeyType="next"
               />
@@ -121,10 +119,10 @@ class EditProfile extends Component {
             <View style={styles.SectionStyle}>
               <TextInput
                 style={styles.inputStyle}
-                underlineColorAndroid="gray"
+                underlineColorAndroid="transparent"
                 value={this.state.address}
                 onChangeText={(address) => this.setState({address: address})}
-                placeholder="Enter Address"
+                placeholder="Địa chỉ"
                 keyboardType="default"
                 returnKeyType="next"
               />
@@ -132,10 +130,10 @@ class EditProfile extends Component {
             <View style={styles.SectionStyle}>
               <TextInput
                 style={styles.inputStyle}
-                underlineColorAndroid="gray"
+                underlineColorAndroid="transparent"
                 value={this.state.phone}
                 onChangeText={(phone) => this.setState({phone: phone})}
-                placeholder="Enter Phone"
+                placeholder="Số điện thoại"
                 keyboardType="numeric"
                 returnKeyType="next"
               />
@@ -144,7 +142,7 @@ class EditProfile extends Component {
               style={styles.buttonStyle}
               activeOpacity={0.5}
               onPress={this.update}>
-              <Text style={styles.buttonTextStyle}>Save</Text>
+              <Text style={styles.buttonTextStyle}>Lưu</Text>
             </TouchableOpacity>
           </KeyboardAvoidingView>
         </ScrollView>
@@ -168,10 +166,10 @@ const styles = StyleSheet.create({
     fontWeight: '500',
   },
   buttonStyle: {
-    backgroundColor: '#7DE24E',
+    backgroundColor: '#E1B9B1',
     borderWidth: 0,
     color: 'black',
-    borderColor: '#7DE24E',
+    borderColor: '#E1B9B1',
     height: 40,
     alignItems: 'center',
     borderRadius: 30,

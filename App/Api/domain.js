@@ -1,2 +1,2 @@
-const DOMAIN = 'http://172.20.10.3:8888/api';
+const DOMAIN = 'http://192.168.1.8:8888/api';
 module.exports = DOMAIN;

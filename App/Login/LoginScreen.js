@@ -36,9 +36,9 @@ export default class LoginScreen extends Component {
                   onChangeText={(username) =>
                     this.setState({username: username})
                   }
-                  placeholder=" Enter Username"
+                  placeholder="Nhập tài khoản"
+                  underlineColorAndroid="transparent"
                   autoCapitalize="none"
-                  keyboardType="email-address"
                   returnKeyType="next"
                 />
               </View>
@@ -46,20 +46,20 @@ export default class LoginScreen extends Component {
                 <TextInput
                   style={styles.inputStyle}
                   value={this.state.password}
+                  underlineColorAndroid="transparent"
                   onChangeText={(password) =>
                     this.setState({password: password})
                   }
                   secureTextEntry={true}
-                  underlineColorAndroid="#FFFFFF"
-                  placeholder="Enter Password"
+                  placeholder="Nhập mật khẩu"
                   keyboardType="default"
                 />
               </View>
               <TouchableOpacity
                 style={styles.buttonStyle}
-                activeOpacity={0.5}
+                activeOpacity={0.2}
                 onPress={this.test}>
-                <Text style={styles.buttonTextStyle}>LOGIN</Text>
+                <Text style={styles.buttonTextStyle}>Đăng nhập</Text>
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={() =>
@@ -138,9 +138,9 @@ const styles = StyleSheet.create({
     margin: 10,
   },
   buttonStyle: {
-    backgroundColor: '#7DE24E',
+    backgroundColor: '#E1B9B1',
     borderWidth: 0,
-    borderColor: '#7DE24E',
+    borderColor: '#E1B9B1',
     height: 40,
     alignItems: 'center',
     borderRadius: 30,

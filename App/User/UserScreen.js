@@ -9,6 +9,7 @@ import {
   Keyboard,
   KeyboardAvoidingView,
   Alert,
+  ImageBackground,
 } from 'react-native';
 import {AsyncStorage} from 'react-native';
 import Domain from '../Api/domain';
@@ -48,7 +49,7 @@ export default class UserScreen extends Component {
         this.setState({
           password: res1.password,
           phone: res1.phone,
-          fullName: res1.fullName,
+          fullName: res1.fullname,
           address: res1.adress,
         });
       })
@@ -66,56 +67,58 @@ export default class UserScreen extends Component {
   render() {
     console.log(this.props);
     return (
-      <ScrollView>
-        <View style={styles.container}>
-          <View style={styles.header} />
-          <Image
-            style={styles.avatar}
-            source={require('../Images/profile.png')}
-          />
-          <View style={styles.body}>
-            <View style={styles.bodyContent}>
-              <Text style={styles.name}>{this.state.fullName}</Text>
-              <Text style={styles.info}>@{this.state.username}</Text>
-              <View style={styles.SectionStyle}>
-                <Text style={styles.text}>Điện thoại:</Text>
-                <Text style={styles.description}>{this.state.phone}</Text>
-              </View>
-              <View style={styles.SectionStyle}>
-                <Text style={styles.text}>Địa chỉ:</Text>
-                <Text style={styles.description}>{this.state.address}</Text>
-              </View>
-              <TouchableOpacity
-                style={styles.buttonContainer}
-                activeOpacity={0.5}
-                onPress={this.edit}>
-                <Text style={styles.buttonTextStyle}>Edit Profile </Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={styles.buttonContainer}
-                activeOpacity={0.5}
-                onPress={this.change}>
-                <Text style={styles.buttonTextStyle}>Change Password </Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={styles.buttonContainer}
-                activeOpacity={0.5}
-                onPress={() => this.props.navigation.popToTop()}>
-                <Text style={styles.buttonTextStyle}>Log out </Text>
-              </TouchableOpacity>
-            </View>
-          </View>
+      <ImageBackground
+        style={{flex: 1, justifyContent: 'center'}}
+        source={require('../Images/bgCoffee.jpg')}>
+        <Text style={{fontSize: 20, color: 'white',backgroundColor:'#484848',padding:4,borderRadius:10, fontWeight: '600',alignSelf:'center'}}>
+          Xin chào: {this.state.fullName}
+        </Text>
+        <View
+          style={{
+            backgroundColor: 'white',
+            justifyContent: 'center',
+            borderRadius: 20,
+            padding: 16,
+            margin: 16,
+          }}>
+          <Text style={{fontSize: 16, color: '#7E8EAA', marginTop: 0}}>
+            Tên đăng nhập: {this.state.username}
+          </Text>
+          <Text style={{fontSize: 16, color: '#979797', marginTop: 0}}>
+            Số điện thoại: {this.state.phone}
+          </Text>
+          <Text style={{fontSize: 16, color: '#979797', marginTop: 0}}>
+            Địa chỉ: {this.state.address}
+          </Text>
         </View>
-      </ScrollView>
+        <TouchableOpacity
+          style={styles.buttonContainer}
+          activeOpacity={0.5}
+          onPress={this.edit}>
+          <Text style={styles.buttonTextStyle}>Sửa thông tin</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.buttonContainer}
+          activeOpacity={0.5}
+          onPress={this.change}>
+          <Text style={styles.buttonTextStyle}>Đổi mật khẩu</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.buttonContainer}
+          activeOpacity={0.5}
+          onPress={() => this.props.navigation.popToTop()}>
+          <Text style={styles.buttonTextStyle}>Đăng xuất</Text>
+        </TouchableOpacity>
+      </ImageBackground>
     );
   }
 }
 
 const styles = StyleSheet.create({
   buttonStyle: {
-    backgroundColor: '#7DE24E',
+    backgroundColor: '#E1B9B1',
     borderWidth: 0,
-    borderColor: '#7DE24E',
+    borderColor: '#E1B9B1',
     height: 40,
     alignItems: 'center',
     borderRadius: 30,
@@ -136,7 +139,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   header: {
-    backgroundColor: '#7DE24E',
+    backgroundColor: '#E1B9B1',
     height: 180,
   },
   avatar: {
@@ -149,29 +152,6 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     position: 'absolute',
     marginTop: 80,
-  },
-  name: {
-    fontSize: 22,
-    color: '#FFFFFF',
-    fontWeight: '600',
-  },
-  body: {
-    marginTop: 0,
-  },
-  bodyContent: {
-    flex: 1,
-    alignItems: 'center',
-    padding: 27,
-  },
-  // name: {
-  //   fontSize: 28,
-  //   color: '#696969',
-  //   fontWeight: '600',
-  // },
-  info: {
-    fontSize: 16,
-    color: '#7DE24E',
-    marginTop: 0,
   },
   description: {
     fontSize: 16,
@@ -191,9 +171,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
+    alignSelf: 'center',
     marginBottom: 20,
     width: 250,
     borderRadius: 30,
-    backgroundColor: '#7DE24E',
+    backgroundColor: '#E1B9B1',
   },
 });
